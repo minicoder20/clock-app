@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Digital Clock</title>
+    <style>
+        /* Reset and center everything */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #0f172a; /* Dark sleek background */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Clock Container */
+        .clock-container {
+            background: #1e293b;
+            padding: 30px 60px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid #334155;
+            text-align: center;
+        }
+
+        /* Time Display */
+        .time {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #38bdf8; /* Bright neon blue */
+            letter-spacing: 2px;
+        }
+
+        /* Session (AM/PM) */
+        .session {
+            font-size: 1.5rem;
+            color: #94a3b8;
+            margin-left: 10px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="clock-container">
+        <div class="time">
+            <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span><span id="session" class="session">AM</span>
+        </div>
+    </div>
+
+    <script>
+        function updateClock() {
+            // 1. Get the current date and time
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+            let session = "AM";
+
+            // 2. Convert to 12-hour format and set AM/PM
+            if (hours === 0) {
+                hours = 12; // Midnight condition
+            }
+            if (hours > 12) {
+                hours = hours - 12;
+                session = "PM";
+            }
+
+            // 3. Add leading zeros if numbers are less than 10
+            hours = hours < 10 ? "0" + hours : hours;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            // 4. Inject the values into the HTML
+            document.getElementById("hours").innerText = hours;
+            document.getElementById("minutes").innerText = minutes;
+            document.getElementById("seconds").innerText = seconds;
+            document.getElementById("session").innerText = session;
+        }
+
+        // 5. Call the function every 1000ms (1 second)
+        setInterval(updateClock, 1000);
+
+        // Run the function immediately on page load so it doesn't show 00:00:00 initially
+        updateClock();
+    </script>
+
+</body>
+</html>
